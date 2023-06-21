@@ -39,18 +39,14 @@ export const AddItemForm = (props: AddItemFormPropsType) => {
 
     return (
         <div>
-            {/*<input value={title}*/}
-            {/*       onChange={onChangeHandler}*/}
-            {/*       onKeyPress={onKeyPressHandler}*/}
-            {/*       className={error ? "error" : ""}*/}
-            {/*/>*/}
             <TextField id="outlined-basic"
-                       label="New Item"
+                       label={error ? "Title is required" : "Please type out..."}
                        variant="outlined"
                        size={"small"}
                        value={title}
                        onChange={onChangeHandler}
                        onKeyPress={onKeyPressHandler}
+                       error={!!error}
             />
 
             <Button style={buttonSettings}
@@ -58,7 +54,6 @@ export const AddItemForm = (props: AddItemFormPropsType) => {
                     size="small"
                     color="success"
                     onClick={addTask}>+</Button>
-            {error && <div className="error-message">{error}</div>}
         </div>
     );
 };

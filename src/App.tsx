@@ -7,9 +7,10 @@ import {ButtonAppBar} from "./ButtonAppBar";
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
+import {addTodolistAC, removeTodolistAC, TodolistsReduser, updateTodoListAC} from "./state/todolists-reduser";
 
 export type FilterValuesType = "all" | "active" | "completed";
-type TodolistType = {
+export type TodolistType = {
     id: string
     title: string
     filter: FilterValuesType
@@ -43,8 +44,10 @@ function App() {
     })
 
     const removeTodolist = (todolistID: string) => {
-        setTodolists(todolists.filter(el => el.id !== todolistID))
-        delete tasks[todolistID]
+        TodolistsReduser(todolists, removeTodolistAC(todolistID))
+        // removeTodolistAC(todolistID)
+        //setTodolists(todolists.filter(el => el.id !== todolistID))
+        //delete tasks[todolistID]
     }
 
     function removeTask(todolistID: string, taskId: string) {
@@ -64,19 +67,22 @@ function App() {
         setTodolists(todolists.map(t => t.id === todolistId ? {...t, filter: valueFilter} : t));
     }
 
-    const addTodolist = (newTitle: string) => {
-        let todolistID3 = v1();
-        let newTodoList: TodolistType = {id: todolistID3, title: newTitle, filter: 'all'}
-        setTodolists([newTodoList, ...todolists])
-        setTasks({[todolistID3]: [], ...tasks})
+    const addTodolist = (newTodolistTitle: string) => {
+        TodolistsReduser(todolists,addTodolistAC(newTodolistTitle))
+
+        //let todolistID3 = v1();
+        //let newTodoList: TodolistType = {id: todolistID3, title: newTodolistTitle, filter: 'all'}
+        //setTodolists([newTodoList, ...todolists])
+        //setTasks({[todolistID3]: [], ...tasks})
     }
 
     const updateTask = (todolistID: string, taskID: string, newTitle: string) => {
         setTasks({...tasks, [todolistID]: tasks[todolistID].map(t => t.id === taskID ? {...t, title: newTitle} : t)})
     }
 
-    const updateTodoList = (todolistID: string, newTitle: string) => {
-        setTodolists(todolists.map(el => el.id === todolistID ? {...el, title: newTitle} : el))
+    const updateTodoList = (todolistID: string, newTodolistTitle: string) => {
+        TodolistsReduser(todolists,updateTodoListAC(todolistID,newTodolistTitle))
+        //setTodolists(todolists.map(el => el.id === todolistID ? {...el, title: newTitle} : el))
     }
 
     return (

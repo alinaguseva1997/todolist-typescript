@@ -7,7 +7,13 @@ import {ButtonAppBar} from "./ButtonAppBar";
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
-import {addTodolistAC, removeTodolistAC, TodolistsReduser, updateTodoListAC} from "./state/todolists-reduser";
+import {
+    addTodolistAC,
+    changeFilterTodoListAC,
+    removeTodolistAC,
+    TodolistsReduser,
+    updateTodoListAC
+} from "./state/todolists-reduser";
 
 export type FilterValuesType = "all" | "active" | "completed";
 export type TodolistType = {
@@ -64,7 +70,8 @@ function App() {
     }
 
     function changeFilter(todolistId: string, valueFilter: FilterValuesType) {
-        setTodolists(todolists.map(t => t.id === todolistId ? {...t, filter: valueFilter} : t));
+        // setTodolists(todolists.map(t => t.id === todolistId ? {...t, filter: valueFilter} : t));
+            TodolistsReduser(todolists, changeFilterTodoListAC(todolistId,valueFilter))
     }
 
     const addTodolist = (newTodolistTitle: string) => {

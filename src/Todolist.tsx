@@ -1,11 +1,11 @@
-import React, {ChangeEvent} from 'react';
+import React from 'react';
 import {FilterValuesType} from './App';
 import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
 import IconButton from '@mui/material/IconButton';
 import {Delete} from "@mui/icons-material";
 import Button from '@mui/material/Button';
-import Checkbox from '@mui/material/Checkbox';
+import {SuperCheckbox} from "./components/SuperCheckbox";
 
 type TaskType = {
     id: string
@@ -27,16 +27,16 @@ type PropsType = {
     updateTodoList: (todolistID: string, newTitle: string) => void
 }
 
-function DeleteIcon() {
-    return null;
-}
-
 export function Todolist(props: PropsType) {
 
     const onAllClickHandler = () => props.changeFilter(props.todolistId, "all");
     const onActiveClickHandler = () => props.changeFilter(props.todolistId,"active");
     const onCompletedClickHandler = () => props.changeFilter(props.todolistId,"completed");
     const removeTodoListHandler = () => props.removeTodolist(props.todolistId)
+
+    const onChangeHandler = (id: string, newIsDone: boolean) => {
+        props.changeTaskStatus(props.todolistId, id, newIsDone);
+    }
 
     const addTaskCallBack = (title: string) => {
         props.addTask(props.todolistId, title)
@@ -62,12 +62,10 @@ export function Todolist(props: PropsType) {
             {
                 props.tasks.map(t => {
                     const onClickHandler = () => props.removeTask(props.todolistId,t.id)
-                    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-                        props.changeTaskStatus(props.todolistId, t.id, e.currentTarget.checked);
-                    }
 
                     return <li key={t.id} className={t.isDone ? "is-done" : ""}>
-                        <Checkbox color="success"onChange={onChangeHandler} checked={t.isDone}/>
+                        {/*<Checkbox color="success"onChange={onChangeHandler} checked={t.isDone}/>*/}
+                        <SuperCheckbox callBack = {(newIsDone)=>onChangeHandler(t.id, newIsDone)} isDone = {t.isDone} color="success"/>
                         <EditableSpan oldTitle = {t.title} callback={(newTitle)=>updateTaskHandler(newTitle,t.id)}/>
                         <IconButton aria-label="delete" onClick={onClickHandler}>
                             <Delete/>

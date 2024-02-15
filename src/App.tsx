@@ -51,9 +51,6 @@ function App() {
 
     const removeTodolist = (todolistID: string) => {
         TodolistsReduser(todolists, removeTodolistAC(todolistID))
-        // removeTodolistAC(todolistID)
-        //setTodolists(todolists.filter(el => el.id !== todolistID))
-        //delete tasks[todolistID]
     }
 
     function removeTask(todolistID: string, taskId: string) {
@@ -70,17 +67,11 @@ function App() {
     }
 
     function changeFilter(todolistId: string, valueFilter: FilterValuesType) {
-        // setTodolists(todolists.map(t => t.id === todolistId ? {...t, filter: valueFilter} : t));
             TodolistsReduser(todolists, changeFilterTodoListAC(todolistId,valueFilter))
     }
 
     const addTodolist = (newTodolistTitle: string) => {
         TodolistsReduser(todolists,addTodolistAC(newTodolistTitle))
-
-        //let todolistID3 = v1();
-        //let newTodoList: TodolistType = {id: todolistID3, title: newTodolistTitle, filter: 'all'}
-        //setTodolists([newTodoList, ...todolists])
-        //setTasks({[todolistID3]: [], ...tasks})
     }
 
     const updateTask = (todolistID: string, taskID: string, newTitle: string) => {
@@ -89,7 +80,6 @@ function App() {
 
     const updateTodoList = (todolistID: string, newTodolistTitle: string) => {
         TodolistsReduser(todolists,updateTodoListAC(todolistID,newTodolistTitle))
-        //setTodolists(todolists.map(el => el.id === todolistID ? {...el, title: newTitle} : el))
     }
 
     return (
